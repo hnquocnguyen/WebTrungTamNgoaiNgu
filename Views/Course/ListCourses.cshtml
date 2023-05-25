@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebTrungTamNgoaiNgu.Models.Course>
+
+@{
+    ViewBag.Title = "ListCourses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListCourses</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCourse")
+</p>
+<table class="table">
+    <tr>
+        <th> Lessons</th>
+        <th> Description</th>
+        <th> Term</th>
+        <th> Language</th>
+        <th> Level</th>
+        <th> Category</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.lessons)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.term)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Language.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditCourse", new { id = item.course_id }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.course_id })
+            </td>
+        </tr>
+    }
+
+</table>

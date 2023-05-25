@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QUAN_LY_TRUNG_TAM_NGOAI_NGU" Class="MyDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=LAPTOP-9MLPT6F4\SQLEXPRESS;Initial Catalog=QUAN_LY_TRUNG_TAM_NGOAI_NGU;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QUAN_LY_TRUNG_TAM_NGOAI_NGUConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Language" Member="Languages">
+    <Type Name="Language">
+      <Column Name="language_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Language_Course" Member="Courses" ThisKey="language_id" OtherKey="language_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Level]" Member="Levels">
+    <Type Name="Level">
+      <Column Name="level_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Association Name="Level_Course" Member="Courses" ThisKey="level_id" OtherKey="level_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Category_Course" Member="Courses" ThisKey="category_id" OtherKey="category_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="course_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="lessons" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="term" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="level_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="language_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Course_Class" Member="Classes" ThisKey="course_id" OtherKey="course_id" Type="Class" />
+      <Association Name="Category_Course" Member="Category" ThisKey="category_id" OtherKey="category_id" Type="Category" IsForeignKey="true" />
+      <Association Name="Language_Course" Member="Language" ThisKey="language_id" OtherKey="language_id" Type="Language" IsForeignKey="true" />
+      <Association Name="Level_Course" Member="Level" ThisKey="level_id" OtherKey="level_id" Type="Level" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Class" Member="Classes">
+    <Type Name="Class">
+      <Column Name="class_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="start_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="teacher_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="course_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Class_Class_student" Member="Class_students" ThisKey="class_id" OtherKey="student_id" Type="Class_student" />
+      <Association Name="Class_Class_weekday" Member="Class_weekdays" ThisKey="class_id" OtherKey="class_id" Type="Class_weekday" />
+      <Association Name="Class_Test" Member="Tests" ThisKey="class_id" OtherKey="class_id" Type="Test" />
+      <Association Name="Class_Homework" Member="Homeworks" ThisKey="class_id" OtherKey="class_id" Type="Homework" />
+      <Association Name="Course_Class" Member="Course" ThisKey="course_id" OtherKey="course_id" Type="Course" IsForeignKey="true" />
+      <Association Name="Teacher_Class" Member="Teacher" ThisKey="teacher_id" OtherKey="teacher_id" Type="Teacher" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student" Member="Students">
+    <Type Name="Student">
+      <Column Name="student_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="birthday" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="Char(11)" CanBeNull="true" />
+      <Column Name="street" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="login" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="Student_Class_student" Member="Class_students" ThisKey="student_id" OtherKey="class_id" Type="Class_student" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Class_student" Member="Class_students">
+    <Type Name="Class_student">
+      <Column Name="student_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="class_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Student_Class_student" Member="Student" ThisKey="class_id" OtherKey="student_id" Type="Student" IsForeignKey="true" />
+      <Association Name="Class_Class_student" Member="Class" ThisKey="student_id" OtherKey="class_id" Type="Class" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Class_weekday" Member="Class_weekdays">
+    <Type Name="Class_weekday">
+      <Column Name="class_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="weekday_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="hours" Type="System.String" DbType="Char(20)" CanBeNull="true" />
+      <Association Name="Class_Class_weekday" Member="Class" ThisKey="class_id" OtherKey="class_id" Type="Class" IsForeignKey="true" />
+      <Association Name="Weekday_Class_weekday" Member="Weekday" ThisKey="weekday_id" OtherKey="weekday_id" Type="Weekday" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Weekday" Member="Weekdays">
+    <Type Name="Weekday">
+      <Column Name="weekday_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="Weekday_Class_weekday" Member="Class_weekdays" ThisKey="weekday_id" OtherKey="weekday_id" Type="Class_weekday" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Teacher" Member="Teachers">
+    <Type Name="Teacher">
+      <Column Name="teacher_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="Char(11)" CanBeNull="true" />
+      <Column Name="login" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="Teacher_Class" Member="Classes" ThisKey="teacher_id" OtherKey="teacher_id" Type="Class" />
+      <Association Name="Teacher_Test" Member="Tests" ThisKey="teacher_id" OtherKey="teacher_id" Type="Test" />
+      <Association Name="Teacher_Homework" Member="Homeworks" ThisKey="teacher_id" OtherKey="teacher_id" Type="Homework" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Test" Member="Tests">
+    <Type Name="Test">
+      <Column Name="test_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="test_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="test_result" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="comment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="class_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="teacher_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Class_Test" Member="Class" ThisKey="class_id" OtherKey="class_id" Type="Class" IsForeignKey="true" />
+      <Association Name="Teacher_Test" Member="Teacher" ThisKey="teacher_id" OtherKey="teacher_id" Type="Teacher" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Homework" Member="Homeworks">
+    <Type Name="Homework">
+      <Column Name="homework_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="start_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="homework_result" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="comment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="class_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="teacher_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Class_Homework" Member="Class" ThisKey="class_id" OtherKey="class_id" Type="Class" IsForeignKey="true" />
+      <Association Name="Teacher_Homework" Member="Teacher" ThisKey="teacher_id" OtherKey="teacher_id" Type="Teacher" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

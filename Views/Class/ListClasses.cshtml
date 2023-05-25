@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebTrungTamNgoaiNgu.Models.Class>
+
+@{
+    ViewBag.Title = "ListClasses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListClasses</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateClass")
+</p>
+<table class="table">
+    <tr>
+        <th> Name</th>
+        <th> Start Date</th>
+        <th> End Date</th>
+        <th> Teacher</th>
+        <th> Course</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.end_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.course_id)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditClass", new { id = item.class_id }) |
+                @Html.ActionLink("Delete", "DeleteClass", new { id = item.class_id })
+            </td>
+        </tr>
+    }
+
+</table>
